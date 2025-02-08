@@ -120,7 +120,7 @@ plot(
   possible_theta,
   probability,
   type="l", 
-  col = "red", 
+  col = "blue", 
   lwd =2,
   xlab = expression(theta),
   ylab="Probability",
