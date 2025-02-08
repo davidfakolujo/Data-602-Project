@@ -1,0 +1,137 @@
+---
+title: "Data 602 Final Project"
+author: "Akinyemi Apampa, David Fakolujo, Joshua Ogunbo, Prince Oloma, Ravin Jayasuriya"
+date: "2025-02-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+**a)** 
+
+The probability mass function for the number of dirty packets $X_1$ out of the $n_1 = 2$ selected packets, given a total of $N_1 = 496$ packets with $\theta$ dirty packets, follows a hypergeometric distribution:
+
+$$P_{\theta}(X_1 = x_1) = \frac{\binom{\theta}{x_1} \binom{N_1 - \theta}{n_1 - x_1}}{\binom{N_1}{n_1}}$$
+
+where:
+$N_1 = 496$ is the total number of packets,
+$n_1 = 2$ is the sample size,
+$\theta$ is the unknown number of dirty packets,
+$x_1 \in \{0, 1, 2\}$ represents the observed number of dirty packets.
+$N_1 - \theta$ is the number of clean packets in the Population
+$n_1 - x_1$ is the number of clean packets from the sample 
+
+**b)**
+
+In our situation, $\theta$ is unknown. The parameter space of $\theta$ is dependent on the possible values of $x_1$. 
+
+If we were to use a calculus approach to analyze this problem we would take a derivative of the function and equate it to 0. This would provide us with the maximum value, and then we would solve for $\theta$. In this case this is not possible because $P_\theta (X_1 = x_1)$ is not continuous.
+
+Instead of taking the calculus approach another viable option is to plot, the function at $x_1$=1 and all possible values of theta. Then using this plot we can visually indicate the max.This is called the Maximum likelihood Estimate or MLE. The MLE indicates the most likely value for $\theta$ given the observed data, not necessarily the true value of $\theta$ within that population. 
+
+For this problem we will look at two cases. Case 1 where $x_1=1$. Assuming 1 sample is dirty is the observed data in our sample, the MLE will help us to identify the value of $\theta$ that maximizes the likelihood of observing exactly one dirty packet.In Case 2, we will test $n_1=2$, and $x_1=0$, or that we have no dirty packets within the sample. 
+
+For Case 1 we have 2 constraints: 
+
+1. From the first term in the numerator $\binom{\theta}{x_1}$, it can be inferred that it is not possible to select more dirty packets than what actually exists. Therefore: $x_1<=\theta$ represents the lower bound. 
+
+2. From the second term in the numerator $\binom{N_1 - \theta}{n_1 - x_1}$, it can be inferred that you cannot select more clean packets than what already exists. Therefore: $\theta <= N_1 - n_1 +x_1$, which represents the the upper bound. 
+
+Utilizing $N_1= 496, n_1= 2, x_1=1$:
+
+The lower bound becomes $x_1<=\theta$, or $\theta >=1$.
+
+And the upper bound becomes $\theta <= 496 - 2 +1$. So, $\theta <= 495$. 
+
+The R-script to conduct the MLE estimation where $x_1=1$ is as follows: 
+
+```{r}
+
+#Case 1: Observing 1 dirty packet
+N_1 <- 496
+n_1 <- 2
+x_1 <- 1
+
+#the possible theta values 
+possible_theta <- 1:495
+
+#Calculating the hypergeometric probability
+probability <- dhyper(x_1, possible_theta, N_1-possible_theta, n_1)
+
+
+#finding the max values for theta and the max probability
+theta_max <- possible_theta[which.max(probability)]
+max_prob <-max(probability)
+
+#Plotting the function
+plot(
+  possible_theta,
+  probability,
+  type="l", 
+  col = "red", 
+  lwd =2,
+  xlab = expression(theta),
+  ylab="Probability",
+  main = expression(paste("Probability Function for ", theta, " at ", X[1], "=1")))
+
+  #adding a point to indicate the Max
+  points(theta_max, max_prob, col="yellow", pch=19, cex=1.5)
+  
+  #print results 
+  print(paste("The maximum value for theta is:", theta_max))
+  print(paste("The maximum Probability is:", max_prob))
+  
+
+```
+From our output, the maximum likelihood estimate (MLE) tells us that the maximum value for theta is 248. If there is 1 packet that is dirty from the sample of 2 packets; then out of the entire population of cocaine packets (496), we expect to have 248 dirty packets. And there is a 50.1% chance of seeing 1 dirty packet in our sample of 2. 
+
+Case 2: Estimating $\theta$ when observing 0 dirty packets from the sample of 2. 
+
+Utilizing $N_1= 496, n_1= 2, x_1=0$:
+
+The lower bound becomes $x_1<=\theta$, or $\theta >=0$.
+
+And the upper bound becomes $\theta <= 496 - 2 +0$. So, $\theta <= 494$. 
+
+The R-script to conduct the MLE estimation where $x_1=0$ is as follows: 
+
+```{r}
+
+#Case 2: Observing 0 dirty packet
+N_1 <- 496
+n_1 <- 2
+x_1 <- 0
+
+#the possible theta values 
+possible_theta <- 0:494
+
+#Calculating the hypergeometric probability
+probability <- dhyper(x_1, possible_theta, N_1-possible_theta, n_1)
+
+#finding the max values for theta and the max probability
+theta_max <- possible_theta[which.max(probability)]
+max_prob <-max(probability)
+
+#Plotting the function
+plot(
+  possible_theta,
+  probability,
+  type="l", 
+  col = "red", 
+  lwd =2,
+  xlab = expression(theta),
+  ylab="Probability",
+  main = expression(paste("Probability Function for ", theta, " at ", X[1], "=0")))
+  
+  #adding a point to indicate the Max
+  points(theta_max, max_prob, col="yellow", pch=19, cex=1.5)
+  
+  #print results 
+  print(paste("The maximum value for theta is:", theta_max))
+  print(paste("The maximum Probability is:", max_prob))
+```
+
+When there are zero dirty packets in the sample or $x_1$ = 0, then the maximum likelihood estimate (MLE) tells us that the value for theta or the number of dirty packets in the population is also zero. This makes sense, because if there are no dirty packets observed, the highest likelihood corresponds to there being none within the population. 
