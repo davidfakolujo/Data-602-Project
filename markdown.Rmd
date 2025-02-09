@@ -135,3 +135,80 @@ plot(
 ```
 
 When there are zero dirty packets in the sample or $x_1$ = 0, then the maximum likelihood estimate (MLE) tells us that the value for theta or the number of dirty packets in the population is also zero. This makes sense, because if there are no dirty packets observed, the highest likelihood corresponds to there being none within the population. 
+
+
+```{r}
+# Observing 2 dirty packets put of 4
+
+N_2 <- 494
+n_2 <- 4
+x_2 <- 2
+
+#the possible theta values 
+possible_theta_2 <- 2:492
+
+#Calculating the hypergeometric probability
+probability_2 <- dhyper(x_2, possible_theta_2, N_2-possible_theta_2, n_2)
+
+#finding the max values for theta and the max probability
+theta_max_2 <- possible_theta_2[which.max(probability_2)]
+max_prob_2 <-max(probability_2)
+
+#Plotting the function
+plot(
+  possible_theta_2,
+  probability_2,
+  type="l", 
+  col = "red", 
+  lwd =2,
+  xlab = expression(theta),
+  ylab="Probability",
+  main = expression(paste("Probability Function for ", theta, " at ", X[2], "=0")))
+
+  #adding a point to indicate the Max
+  points(theta_max_2, max_prob_2, col="yellow", pch=19, cex=1.5)
+  
+  #print results 
+  print(paste("The Maximum Likelihood Estimate for theta is:", theta_max_2))
+  print(paste("The maximum Probability is:", max_prob_2))
+
+```
+
+```{r}
+# determine joint sampling distribution
+
+max_theta = min(max(possible_theta), max(possible_theta_2))
+min_theta = max(min(possible_theta), min(possible_theta_2))
+
+print(paste("The smallest possible value of theta for the joint sampling distribution is:", min_theta))
+
+print(paste("The largest possible value of theta for the joint sampling distribution is:", max_theta))
+
+# determine the joint sampling distribution using the lower and upper bounds
+probability_3 = probability[3:493] * probability_2[1:491]
+```
+
+```{r}
+#finding the max values for theta and the max probability
+theta_max_3 <- possible_theta_2[which.max(probability_3)]
+max_prob_3 <-max(probability_3)
+
+#Plotting the function
+plot(
+  possible_theta_2,
+  probability_3,
+  type="l", 
+  col = "red", 
+  lwd =2,
+  xlab = expression(theta),
+  ylab="Probability",
+  main = expression(paste("Probability Function for ", theta, " at ", 
+                          X[1], "=0", X[2], "=2")))
+
+  #adding a point to indicate the Max
+  points(theta_max_3, max_prob_3, col="yellow", pch=19, cex=1.5)
+  
+  #print results 
+  print(paste("The Maximum Likelihood Estimate for theta is:", theta_max_3))
+  print(paste("The maximum Probability is:", max_prob_3))
+```
