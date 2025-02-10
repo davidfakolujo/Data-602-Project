@@ -212,3 +212,61 @@ plot(
   print(paste("The Maximum Likelihood Estimate for theta is:", theta_max_3))
   print(paste("The maximum Probability is:", max_prob_3))
 ```
+```{r}
+set.seed(0212.2025)
+
+N_1 = 496 
+theta = 331
+K = 1
+```
+
+```{r}
+X = rhyper(1000, 331, 496-331, 2)
+X
+```
+
+```{r}
+MLE_X = numeric(1000)
+
+for (i in 1:1000) {
+  possible_theta = 0:496
+  probability = dhyper(X[i], possible_theta, 496-possible_theta, 2)
+  MLE_X[i] = possible_theta[which.max(probability)]
+}
+MLE_X
+```
+
+```{r}
+bias = mean(MLE_X) - theta
+bias
+
+rmse = sqrt(var(MLE_X) + (bias ** 2))
+rmse
+```
+
+
+```{r}
+library(extraDistr)
+nn = rnhyper(1000, 496-331, 331, 1)
+nn
+```
+
+
+```{r}
+MLE_Y = numeric(1000)
+
+for (i in 1:1000) {
+  possible_theta = 1:495
+  probability = dnhyper(nn[i], 496 - possible_theta, possible_theta, 1)
+  MLE_Y[i] = possible_theta[which.max(probability)]
+}
+MLE_Y
+```
+
+```{r}
+bias2 = mean(MLE_Y) - theta
+bias2
+
+rmse2 = sqrt(var(MLE_Y) + (bias2 ** 2))
+rmse2
+```
