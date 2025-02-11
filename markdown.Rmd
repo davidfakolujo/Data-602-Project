@@ -322,3 +322,77 @@ rmse2 = sqrt(var(MLE_Y) + (bias2 ** 2))
 rmse2
 ```
 
+**Checking Hypergeometric function with fixed sample size n = 4**
+```{r}
+X = rhyper(1000, 331, 496-331, 4)
+X
+```
+
+```{r}
+MLE_X = numeric(1000)
+
+for (i in 1:1000) {
+  possible_theta = 0:496
+  probability = dhyper(X[i], possible_theta, 496-possible_theta, 4)
+  MLE_X[i] = possible_theta[which.max(probability)]
+}
+MLE_X
+```
+
+```{r}
+bias = mean(MLE_X) - theta
+bias
+
+rmse = sqrt(var(MLE_X) + (bias ** 2))
+rmse
+```
+
+**Checking Hypergeometric function with fixed sample size n = 5**
+```{r}
+X = rhyper(1000, 331, 496-331, 5)
+X
+```
+
+```{r}
+MLE_X = numeric(1000)
+
+for (i in 1:1000) {
+  possible_theta = 0:496
+  probability = dhyper(X[i], possible_theta, 496-possible_theta, 5)
+  MLE_X[i] = possible_theta[which.max(probability)]
+}
+MLE_X
+```
+
+```{r}
+bias = mean(MLE_X) - theta
+bias
+
+rmse = sqrt(var(MLE_X) + (bias ** 2))
+rmse
+```
+
+**Checking Hypergeometric function with fixed sample size n = 6**
+```{r}
+X = rhyper(1000, 331, 496-331, 6)
+X
+```
+
+```{r}
+MLE_X = numeric(1000)
+
+for (i in 1:1000) {
+  possible_theta = 0:496
+  probability = dhyper(X[i], possible_theta, 496-possible_theta, 6)
+  MLE_X[i] = possible_theta[which.max(probability)]
+}
+MLE_X
+```
+
+```{r}
+bias = mean(MLE_X) - theta
+bias
+
+rmse = sqrt(var(MLE_X) + (bias ** 2))
+rmse
+```
