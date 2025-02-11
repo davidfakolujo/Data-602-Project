@@ -270,3 +270,55 @@ bias2
 rmse2 = sqrt(var(MLE_Y) + (bias2 ** 2))
 rmse2
 ```
+
+Testing for different values of $\theta_0$ $\newline$
+$\theta_0 = 150$
+
+```{r}
+nn2 = rnhyper(1000, 496-150, 150, 1)
+nn2
+```
+
+```{r}
+MLE_Y = numeric(1000)
+
+for (i in 1:1000) {
+  possible_theta = 1:495
+  probability = dnhyper(nn2[i], 496 - possible_theta, possible_theta, 1)
+  MLE_Y[i] = possible_theta[which.max(probability)]
+}
+MLE_Y
+```
+
+```{r}
+bias2 = mean(MLE_Y) - theta
+bias2
+
+rmse2 = sqrt(var(MLE_Y) + (bias2 ** 2))
+rmse2
+```
+Checking for $\theta_0 = 450$
+```{r}
+nn3 = rnhyper(1000, 496-450, 450, 1)
+nn3
+```
+
+```{r}
+MLE_Y = numeric(1000)
+
+for (i in 1:1000) {
+  possible_theta = 1:495
+  probability = dnhyper(nn3[i], 496 - possible_theta, possible_theta, 1)
+  MLE_Y[i] = possible_theta[which.max(probability)]
+}
+MLE_Y
+```
+
+```{r}
+bias2 = mean(MLE_Y) - theta
+bias2
+
+rmse2 = sqrt(var(MLE_Y) + (bias2 ** 2))
+rmse2
+```
+
