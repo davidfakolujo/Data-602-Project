@@ -322,7 +322,7 @@ rmse2 = sqrt(var(MLE_Y) + (bias2 ** 2))
 rmse2
 ```
 
-**Checking Hypergeometric function with fixed sample size n = 4**
+**Checking Hypergeometric distribution with fixed sample size n = 4**
 ```{r}
 X = rhyper(1000, 331, 496-331, 4)
 X
@@ -347,7 +347,7 @@ rmse = sqrt(var(MLE_X) + (bias ** 2))
 rmse
 ```
 
-**Checking Hypergeometric function with fixed sample size n = 5**
+**Checking Hypergeometric distribution with fixed sample size n = 5**
 ```{r}
 X = rhyper(1000, 331, 496-331, 5)
 X
@@ -372,7 +372,7 @@ rmse = sqrt(var(MLE_X) + (bias ** 2))
 rmse
 ```
 
-**Checking Hypergeometric function with fixed sample size n = 6**
+**Checking Hypergeometric distribution with fixed sample size n = 6**
 ```{r}
 X = rhyper(1000, 331, 496-331, 6)
 X
