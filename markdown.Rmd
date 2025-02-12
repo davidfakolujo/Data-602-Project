@@ -228,6 +228,60 @@ This conclusion makes intuitive sense if none of the selected packets tested pos
 Mathematically, this means that the **likelihood function** reaches its highest value when \( \theta = 0 \), reinforcing the idea that the absence of dirty packets in the sample strongly suggests their absence in the entire population.
 
 
+### Case 3: Estimating \( \theta \) When \( X_1 = 2 \)
+
+If both packets selected in our sample are dirty (\( x_1 = 2 \)), the **Maximum Likelihood Estimate (MLE)** should provide the most likely estimate for the total number of dirty packets in the population.
+
+### Constraints on \( \theta \)
+
+1. Since we observed two dirty packets, the **smallest possible** \( \theta \) is **2**:
+   \[
+   x_1 \leq \theta \quad \Rightarrow \quad \theta \geq 2.
+   \]
+
+2. The **largest possible** \( \theta \) is still constrained by the total number of packets:
+   \[
+   \theta \leq N_1 - n_1 + x_1 \quad \Rightarrow \quad \theta \leq 496.
+   \]
+   
+```{r}
+N_1 <- 496  # Total packets
+n_1 <- 2    # Sample size
+x_1 <- 2    # Observed dirty packets
+
+possible_theta <- 2:496
+
+probability <- dhyper(x_1, possible_theta, N_1 - possible_theta, n_1)
+
+theta_max <- possible_theta[which.max(probability)]
+max_prob <- max(probability)
+
+# Plot likelihood function
+plot(
+  possible_theta,
+  probability,
+  type = "l",
+  col = "red",
+  lwd = 2,
+  xlab = expression(theta),
+  ylab = "Probability",
+  main = expression(paste("MLE of ", theta, " for ", X[1], "=2"))
+)
+
+points(theta_max, max_prob, col = "yellow", pch = 19, cex = 1.5)
+
+print(paste("The maximum likelihood estimate for theta is:", theta_max))
+print(paste("The maximum probability is:", max_prob))
+```
+\
+
+When two dirty packets (\( x_1 = 2 \)) are observed in the sample, the **Maximum Likelihood Estimate (MLE)** suggests that the most likely value of \( \theta \) (the total number of dirty packets in the population) is **496**.  
+
+This conclusion makes intuitive sense if two of the selected packets tested positive for cocaine, the best estimate is that there are **496 dirty packets** in the entire population. In other words, based on the sample data, it is most probable that all packets in the population are dirty  
+
+Mathematically, this means that the **likelihood function** reaches its highest value when \( \theta = 496 \), reinforcing the idea that the presence of dirty packets in the sample strongly suggests their prsence in the entire population.
+
+
 # (c). Joint Sampling Distribution of \( X_1 \) and \( X_2 \)
 
 After the \( n_1 = 2 \) packets initially analyzed turned out to be clean, the **crown prosecutor** and the **detectives** quickly decided to have **\( n_2 = 4 \) more packets** analyzed. As before, these packets were randomly chosen **without replacement** from the remaining \( N_2 = 496 - 2 = 494 \) packets hoping to find a dirty packet and thus avoid having the **criminal charges dismissed** by the judge for **lack of or insufficient evidence**.  
@@ -391,7 +445,7 @@ plot(
   xlab = expression(theta),
   ylab = "Probability",
   main = expression(paste("Joint Probability Function for ", theta, " at ", 
-                          X[1], "=0", X[2], "=2"))
+                          X[1], "=0", " ", X[2], "=2"))
 )
 
 points(theta_max_3, max_prob_3, col = "yellow", pch = 19, cex = 1.5)
