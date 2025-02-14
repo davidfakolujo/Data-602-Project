@@ -248,17 +248,17 @@ N_1 <- 496  # Total packets
 n_1 <- 2    # Sample size
 x_1 <- 2    # Observed dirty packets
 
-possible_theta <- 2:496
+possible_theta_2 <- 2:496
 
-probability <- dhyper(x_1, possible_theta, N_1 - possible_theta, n_1)
+probability_2 <- dhyper(x_1, possible_theta_2, N_1 - possible_theta_2, n_1)
 
-theta_max <- possible_theta[which.max(probability)]
-max_prob <- max(probability)
+theta_max_2 <- possible_theta_2[which.max(probability_2)]
+max_prob_2 <- max(probability_2)
 
 # Plot likelihood function
 plot(
-  possible_theta,
-  probability,
+  possible_theta_2,
+  probability_2,
   type = "b",
   col = "red",
   lwd = 0.5,
@@ -267,10 +267,10 @@ plot(
   main = expression(paste("MLE of ", theta, " for ", X[1], "=2"))
 )
 
-points(theta_max, max_prob, col = "yellow", pch = 19, cex = 1.5)
+points(theta_max_2, max_prob_2, col = "yellow", pch = 19, cex = 1.5)
 
-print(paste("The maximum likelihood estimate for theta is:", theta_max))
-print(paste("The maximum probability is:", max_prob))
+print(paste("The maximum likelihood estimate for theta is:", theta_max_2))
+print(paste("The maximum probability is:", max_prob_2))
 ```
 \
 
@@ -361,19 +361,19 @@ n_2 <- 4
 x_2 <- 2
 
 # The possible theta values
-possible_theta_2 <- 2:492
+possible_theta_3 <- 2:492
 
 # Calculating the hypergeometric probability
-probability_2 <- dhyper(x_2, possible_theta_2, N_2 - possible_theta_2, n_2)
+probability_3 <- dhyper(x_2, possible_theta_3, N_2 - possible_theta_3, n_2)
 
 # Finding the max values for theta and the max probability
-theta_max_2 <- possible_theta_2[which.max(probability_2)]
-max_prob_2 <- max(probability_2)
+theta_max_3 <- possible_theta_3[which.max(probability_3)]
+max_prob_3 <- max(probability_3)
 
 
 plot(
-  possible_theta_2,
-  probability_2,
+  possible_theta_3,
+  probability_3,
   type = "b", 
   col = "red", 
   lwd = 0.5,
@@ -382,13 +382,13 @@ plot(
   main = expression(paste("Probability Function for ", theta, " at ", X[2], "=2"))
 )
 
-points(theta_max_2, max_prob_2, col = "yellow", pch = 19, cex = 1.5)
+points(theta_max_3, max_prob_3, col = "yellow", pch = 19, cex = 1.5)
 
-max_theta = min(max(possible_theta), max(possible_theta_2))
-min_theta = max(min(possible_theta), min(possible_theta_2))
+max_theta = min(max(possible_theta_3), max(possible_theta_3))
+min_theta = max(min(possible_theta_3), min(possible_theta_3))
 
-print(paste("The Maximum Likelihood Estimate for theta is:", theta_max_2))
-print(paste("The maximum Probability is:", max_prob_2))
+print(paste("The Maximum Likelihood Estimate for theta is:", theta_max_3))
+print(paste("The maximum Probability is:", max_prob_3))
 
 print(
   paste(
@@ -429,15 +429,15 @@ With \( x_2 = 2 \) dirty packets found in the second test, the conviction is cer
 The new parameter space \( \Theta(0,2) \) depends on the observed values of \( X_1 \) and \( X_2 \).
 
 ```{r}
-probability_3 = probability[3:493] * probability_2[1:491]
+probability_4 = probability[3:493] * probability_3[1:491]
 
-theta_max_3 <- possible_theta_2[which.max(probability_3)]
-max_prob_3 <- max(probability_3)
+theta_max_4 <- possible_theta_2[which.max(probability_4)]
+max_prob_4 <- max(probability_4)
 
 
 plot(
-  possible_theta_2,
-  probability_3,
+  possible_theta_3,
+  probability_4,
   type = "b", 
   col = "red", 
   lwd = 0.5,
@@ -447,10 +447,10 @@ plot(
                           X[1], "=0", " ", X[2], "=2"))
 )
 
-points(theta_max_3, max_prob_3, col = "yellow", pch = 19, cex = 1.5)
+points(theta_max_4, max_prob_4, col = "yellow", pch = 19, cex = 1.5)
 
-print(paste("The Maximum Likelihood Estimate for theta (joint) is:", theta_max_3))
-print(paste("The maximum Probability for joint distribution is:", max_prob_3))
+print(paste("The Maximum Likelihood Estimate for theta (joint) is:", theta_max_4))
+print(paste("The maximum Probability for joint distribution is:", max_prob_4))
 ```
 
 
@@ -598,7 +598,7 @@ set.seed(0212.2025)
 
 
 N_1 <- 496                
-true_thetas <- c(331, 150, 450, 60, 20, 250) # Different true values of theta to test
+true_thetas <- c(20, 60, 150, 250, 331, 450) # Different true values of theta to test
 sample_sizes <- c(4, 5, 6, 7, 8) # Sample sizes to test for MLE1
 K <- 1                    
 R <- 1000 
@@ -635,6 +635,7 @@ library(extraDistr)
 compute_MLE3 <- function(true_theta) {
   Y <- rnhyper(R, N_1 - true_theta, true_theta, 1)  # Generate R samples
   MLE_Y <- numeric(R)
+  cat("The average number of packets selected at random without replacement using the Monte Carlo simulation for a theta of ", true_theta,  "is: ", mean(Y), "\n")
 
   for (i in 1:R) {
     possible_theta <- 1:(N_1 - 1)
