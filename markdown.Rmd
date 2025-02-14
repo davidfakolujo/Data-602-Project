@@ -1,10 +1,13 @@
 ---
 title: "Statistical Inference in a Cocaine Drug Bust - Scenerio 1"
-output: 
+author: David Fakolujo, Akinyemi Apampa, Ravin Jayasuriya, Prince Oloma and Joshua
+  Ogunbo
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
   pdf_document:
     latex_engine: xelatex
-author: "David Fakolujo, Akinyemi Apampa, Ravin Jayasuriya, Prince Oloma and Joshua Ogunbo"
-date: "`r Sys.Date()`"
 ---
 
 
@@ -151,9 +154,9 @@ max_prob <- max(probability)
 plot(
   possible_theta,
   probability,
-  type = "l",
+  type = "b",
   col = "red",
-  lwd = 2,
+  lwd = 0.5,
   xlab = expression(theta),
   ylab = "Probability",
   main = expression(paste("MLE of ", theta, " for ", X[1], "=1"))
@@ -206,9 +209,9 @@ max_prob <- max(probability)
 plot(
   possible_theta,
   probability,
-  type = "l",
+  type = "b",
   col = "red",
-  lwd = 2,
+  lwd = 0.5,
   xlab = expression(theta),
   ylab = "Probability",
   main = expression(paste("MLE of ", theta, " for ", X[1], "=0"))
@@ -260,9 +263,9 @@ max_prob <- max(probability)
 plot(
   possible_theta,
   probability,
-  type = "l",
+  type = "b",
   col = "red",
-  lwd = 2,
+  lwd = 0.5,
   xlab = expression(theta),
   ylab = "Probability",
   main = expression(paste("MLE of ", theta, " for ", X[1], "=2"))
@@ -375,9 +378,9 @@ max_prob_2 <- max(probability_2)
 plot(
   possible_theta_2,
   probability_2,
-  type = "l", 
+  type = "b", 
   col = "red", 
-  lwd = 2,
+  lwd = 0.5,
   xlab = expression(theta),
   ylab = "Probability",
   main = expression(paste("Probability Function for ", theta, " at ", X[2], "=2"))
@@ -439,9 +442,9 @@ max_prob_3 <- max(probability_3)
 plot(
   possible_theta_2,
   probability_3,
-  type = "l", 
+  type = "b", 
   col = "red", 
-  lwd = 2,
+  lwd = 0.5,
   xlab = expression(theta),
   ylab = "Probability",
   main = expression(paste("Joint Probability Function for ", theta, " at ", 
