@@ -73,7 +73,7 @@ These simulations provided insights into the **bias, variance, and accuracy** of
 
 ## **Analysis and Results **
 
-### Scenerio 1
+### Scenario 1
 
 Our analysis involves taking a fixed sample of size \( n = 2 \) from a population of \( N = 496 \). We then evaluate different cases where the number of dirty packets in the sample, \( x_1 \), can take values from \( \{0,1,2\} \).
 
@@ -224,7 +224,7 @@ in the entire population.
 
 \
 
-## Scenerio 2
+## Scenario 2
 We analyzed the joint sampling distribution of two dependent discrete random variables, \(X_1\) and \(X_2\), representing the number of dirty packets found in two successive rounds of random sampling without replacement. Initially, \(n_1 = 2\) packets were tested from a total of \(N_1 = 496\), and both were found clean. Subsequently, the investigators selected \(n_2 = 4\) additional packets from the remaining \(N_2 = 494\) packets, hoping to detect at least one dirty packet to support their case. 
 
 
@@ -298,10 +298,11 @@ print(
 )
 ```
 
-## Scenerio 3
-Given that \( x_2 = 2 \) out of the additional \( n_2 = 4 \) sampled packets were found to be dirty, the conviction of the accused is now certain. However, the total number of dirty packets, \( \theta \), remains unknown and needs to be estimated. 
-## Maximum Likelihood Estimation (MLE) 
-We determine \( \theta \), the **maximum likelihood estimate (MLE)** is found by maximizing the joint probability \( P_{\theta}(X_1 = x_1, X_2 = x_2) \) as a function of \( \theta \) over its feasible parameter space, \( \Theta(x_1, x_2) \), which depends on the observed values \( x_1 \) and \( x_2 \). Since both \( X_1(\theta) \) and \( X_2(\theta) \) are functions of \( \theta \), the possible values of \( \theta \) must be considered. 
+## Scenario 3
+Given that \( x_2 = 2 \) out of the additional \( n_2 = 4 \) sampled packets were found to be dirty, the conviction of the accused is now certain. However, the total number of dirty packets, \( \theta \), remains unknown and needs to be estimated. $\newline$ 
+ **Maximum Likelihood Estimation (MLE)**  
+$\newline$
+We determine \( \theta \), the **maximum likelihood estimate (MLE)** by maximizing the joint probability \( P_{\theta}(X_1 = x_1, X_2 = x_2) \) as a function of \( \theta \) over its feasible parameter space, \( \Theta(x_1, x_2) \), which depends on the observed values \( x_1 \) and \( x_2 \). Since both \( X_1(\theta) \) and \( X_2(\theta) \) are functions of \( \theta \), the possible values of \( \theta \) must be considered. 
 ## Finding the MLE 
 We obtain The MLE, denoted as \( \hat{\theta}_2 \),  by evaluating \( P_{\theta}(X_1 = 0, X_2 = 2) \) for all possible values of \( \theta \) in \( \Theta(0,2) \) and selecting the value that maximizes this probability. This approach ensures that the estimated \( \theta \) is the most likely given the observed data.
 
@@ -340,7 +341,7 @@ print(paste("The maximum Probability for joint distribution is:", max_prob_4))
 ```
 \
 
-## Scenerio 4
+## Scenario 4
 After analyzing the packets, where some packets were identified as "dirty," we estimated the total number of dirty packets (\(\theta\)) in a set of 496 packets. Two different approaches can be used for this estimation:
 
 1. **Fixed Sample Method**: Drawing a fixed number of packets at random and analyzing them.
