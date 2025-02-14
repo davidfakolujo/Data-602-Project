@@ -1,11 +1,7 @@
 ---
 title: "Statistical Inference in a Cocaine Drug Bust - Scenerio 1"
-author: David Fakolujo, Akinyemi Apampa, Ravin Jayasuriya, Prince Oloma and Joshua
-  Ogunbo
 date: "`r Sys.Date()`"
-output:
-  html_document:
-    df_print: paged
+output: 
   pdf_document:
     latex_engine: xelatex
 ---
@@ -602,8 +598,8 @@ set.seed(0212.2025)
 
 
 N_1 <- 496                
-true_thetas <- c(331, 150, 450, 60) # Different true values of theta to test
-sample_sizes <- c(4, 5, 6) # Sample sizes to test for MLE1
+true_thetas <- c(331, 150, 450, 60, 20, 250) # Different true values of theta to test
+sample_sizes <- c(4, 5, 6, 7, 8) # Sample sizes to test for MLE1
 K <- 1                    
 R <- 1000 
 ```
@@ -713,7 +709,7 @@ print(MLE3_results_df)
 library(ggplot2)
 library(reshape2)
 
-# Convert data for plotting
+# Convert MLE1 results into long format for plotting
 results_long <- list()
 for (n in sample_sizes) {
   results_long[[as.character(n)]] <- melt(
@@ -721,37 +717,52 @@ for (n in sample_sizes) {
   )
 }
 
+# Combine all sample sizes into a single data frame for Bias and RMSE (MLE1)
+all_results_long <- do.call(rbind, Map(function(df, n) {
+  df$Sample_Size <- as.character(n)
+  return(df)
+}, results_long, sample_sizes))
+
 # Convert MLE3 results into long format for plotting
 results_long_mle3 <- melt(MLE3_results_df, id.vars = "True_Theta")
+results_long_mle3$Sample_Size <- "Sequential-n (MLE3)"
 
-# Plot Bias and RMSE for MLE1 across different sample sizes
-for (n in sample_sizes) {
-  p <- ggplot(
-    results_long[[as.character(n)]], aes(x = True_Theta, y = value, color = variable)) +
-    geom_point(size = 3) +  # Point size is okay
-    geom_line(linewidth = 1) +  # Use `linewidth` instead of `size`
-    facet_wrap(~variable, scales = "free_y") +
-    theme_minimal() +
-    labs(
-      title = paste("MLE1 Comparison (n =", n, ")"),
-      x = "True Theta", y = "Metric Value", color = "Metric"
-    )
-  
-  print(p)
-}
+# Merge MLE1 and MLE3 results
+all_results_combined <- rbind(all_results_long, results_long_mle3)
 
-# Plot Bias and RMSE for MLE3
-p_mle3 <- ggplot(results_long_mle3, aes(x = True_Theta, y = value, color = variable)) +
+# Separate Bias and RMSE for combined plotting
+bias_data <- subset(all_results_combined, variable %in% c("Bias_MLE1", "Bias_MLE3"))
+rmse_data <- subset(all_results_combined, variable %in% c("RMSE_MLE1", "RMSE_MLE3"))
+
+# Rename variable names for better readability
+bias_data$variable <- gsub("Bias_MLE1", "MLE1 (Fixed-n)", bias_data$variable)
+bias_data$variable <- gsub("Bias_MLE3", "MLE3 (Sequential-n)", bias_data$variable)
+rmse_data$variable <- gsub("RMSE_MLE1", "MLE1 (Fixed-n)", rmse_data$variable)
+rmse_data$variable <- gsub("RMSE_MLE3", "MLE3 (Sequential-n)", rmse_data$variable)
+
+# Plot Bias for MLE1 (all sample sizes) and MLE3 on the same graph
+p_bias <- ggplot(bias_data, aes(x = True_Theta, y = value, color = Sample_Size, linetype = variable)) +
   geom_point(size = 3) +
-  geom_line(linewidth = 1) +  # Use `linewidth` instead of `size`
-  facet_wrap(~variable, scales = "free_y") +
+  geom_line(linewidth = 1) +
   theme_minimal() +
   labs(
-    title = "MLE3 (Sequential-n) Comparison",
-    x = "True Theta", y = "Metric Value", color = "Metric"
+    title = "Comparison of Bias for MLE1 (Fixed-n) and MLE3 (Sequential-n)",
+    x = "True Theta", y = "Bias", color = "Sample Size", linetype = "Estimator"
   )
 
-print(p_mle3)  # Explicitly print the final MLE3 plot
+print(p_bias)
+
+# Plot RMSE for MLE1 (all sample sizes) and MLE3 on the same graph
+p_rmse <- ggplot(rmse_data, aes(x = True_Theta, y = value, color = Sample_Size, linetype = variable)) +
+  geom_point(size = 3) +
+  geom_line(linewidth = 1) +
+  theme_minimal() +
+  labs(
+    title = "Comparison of RMSE for MLE1 (Fixed-n) and MLE3 (Sequential-n)",
+    x = "True Theta", y = "RMSE", color = "Sample Size", linetype = "Estimator"
+  )
+
+print(p_rmse)
 ```
 
 
