@@ -514,7 +514,7 @@ print(p_mean)
 
 ## **Comparison of MLE1 and MLE3**  
 
-In this study, we compared two different Maximum Likelihood Estimators (MLEs) for \( \theta \):  
+In this study, we compared two different Maximum Likelihood Estimators (MLEs) for \( \theta \) at different values of 20,60,150,250,331,and 450:  
 1. **MLE1 (Fixed-\( n \) Estimate)**, where the sample size \( n \) is pre-determined.  
 2. **MLE3 (Sequential-\( n \) Estimate)**, where sampling continues until at least one dirty packet is found.  
 
