@@ -48,7 +48,7 @@ where:
 -   $n_1 - x_1$ is the number of clean packets from the sample.
 \
 
-(2) **Maximum Likelihood Estimation (MLE):** This was used to determine the total number of dirty packets,**$\theta$**, in the parameter space containing all the possible values of **$\theta$**, which has the highest probability in the hypergeometric distribution and negative hypergeometric distribution
+(2) **Maximum Likelihood Estimation (MLE):** This was used to determine the total number of dirty packets,**$hat{\theta}$**, in the parameter space containing all the possible values of **$\theta$**, which has the highest probability in the hypergeometric distribution and negative hypergeometric distribution
 
 $$
 \hat{\theta}_1 = \underset{\theta \in \Theta(x_1)}{\arg\max} P_{\theta}(X_1 = x_1).
@@ -65,7 +65,7 @@ $$
   - Applied the **hypergeometric function** to each sample to estimate the **maximum likelihood estimate (MLE)** of the total number of contaminated packets ($\theta$) across various sample sizes.  
 
 - **Negative Hypergeometric Distribution:**  
-  - Similarly, generated **$N$** random samples of dirty packets under a **negative hypergeometric** framework.  
+  - Similarly, generated **$N$** random samples of clean packets picked before picking a dirty packet under a **negative hypergeometric** framework.  
   - Applied the **negative hypergeometric function** to estimate $\theta$ for each generated sample using MLE.  
 
 These simulations provided insights into the **bias, variance, and accuracy** of the estimation methods, ensuring that the chosen approach performs well under repeated sampling conditions.
@@ -230,8 +230,7 @@ We analyzed the joint sampling distribution of two dependent discrete random var
 
 After the initial test of $n_1 = 2$ packets resulted in $X_1 = 0$ dirty
 packets, additional $n_2 = 4$ packets were tested to gather sufficient
-evidence. Let $X_2$ represent the number of dirty packets in this second
-sample.
+evidence, and 2 packets were found to be dirty. Let $X_2$ represent the number of dirty packets in this second sample.
 
 ### Joint Probability of $X_1$ and $X_2$
 
@@ -514,9 +513,9 @@ print(p_mean)
 
 ## **Comparison of MLE1 and MLE3**  
 
-In this study, we compared two different Maximum Likelihood Estimators (MLEs) for \( \theta \) at different values of 20,60,150,250,331,and 450:  
+In this study, we compared two different Maximum Likelihood Estimators (MLEs) for \( \theta \) at different values of 5,20,50,100,150,250,331, and 450:  
 1. **MLE1 (Fixed-\( n \) Estimate)**, where the sample size \( n \) is pre-determined.  
-2. **MLE3 (Sequential-\( n \) Estimate)**, where sampling continues until at least one dirty packet is found.  
+2. **MLE3 (Sequential-\( n \) Estimate)**, where sampling continues until at least one dirty packet is found. The average samples of clean packets picked before picking a dirty packet using different \( \theta \) values were 81,23,9,5,3,2,2, and 1.  
 
 ### **Comparison Metrics**  
 - **Bias:** Measures the accuracy of the estimator. A lower bias means the estimator is closer to the true \( \theta \).  
@@ -526,11 +525,11 @@ In this study, we compared two different Maximum Likelihood Estimators (MLEs) fo
 
 ### **Bias**  
 - **MLE1 remains unbiased** across all values of \( \theta \), meaning it provides an accurate estimate of the true number of dirty packets.  
-- **MLE3 is accurate when \( \theta \) is small**, but **starts to overestimate significantly** when \( \theta \) is large.  
+- **MLE3 has a low bias when \( \theta \) is small**, but **starts to overestimate significantly** as \( \theta \) increases, before gradually reducing again.  
 
 ### **RMSE**  
 - **MLE1 has a lower and more stable RMSE**, meaning it consistently produces precise estimates.  
-- **MLE3 has a low RMSE when \( \theta \) is small**, but **its RMSE increases when \( \theta \) is large**, indicating higher variability and inconsistency.  
+- **MLE3 has a low RMSE when \( \theta \) is small**, but **its RMSE increases as \( \theta \) increases**, indicating higher variability and inconsistency, before gradually reducing again.  
 
 ## **Key Findings**  
 - **MLE3 performs well when \( \theta \) is low**, as it **efficiently detects contamination without excessive sampling**. This makes it useful in **resource-constrained settings** where testing capacity is limited.  
